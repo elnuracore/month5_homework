@@ -14,7 +14,7 @@ class ProductListSerializers(serializers.ModelSerializer):
 class ReviewListSerializers(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = "id product_names text rate".split()
+        fields = "__all__"
 
 class ProductReviewsSerializer(serializers.ModelSerializer):
     reviews = ReviewListSerializers(many=True, read_only=True)

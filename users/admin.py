@@ -1,12 +1,8 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-from .models import User
+from .models import CustomUser, UserConfirmation
 
-@admin.register(User)
-class CustomUserAdmin(UserAdmin):
-    fieldsets = UserAdmin.fieldsets + (
-        (None, {'fields': ('phone_number',)}),
-    )
-    add_fieldsets = UserAdmin.add_fieldsets + (
-        (None, {'fields': ('phone_number',)}),
-    )
+@admin.register(CustomUser)
+class CustomUserAdmin(admin.ModelAdmin):
+    list_display = ('username', 'email', 'phone_number', 'is_staff', 'is_active')
+    search_fields = ('username', 'email', 'phone_number')
+    list_filter = ('is_staff', 'is_active')

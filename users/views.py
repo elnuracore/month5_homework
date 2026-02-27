@@ -4,6 +4,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
+
+from product.models import Product
+from product.serializers import ProductListSerializers
 from .models import UserConfirmation
 import random
 from rest_framework.decorators import api_view
@@ -11,6 +14,17 @@ from .serializers import UserAuthSerializer, UserCreateSerializer, UserConfirmat
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
+from rest_framework import viewsets
+from .permissions import IsModerator
+from rest_framework.permissions import IsAuthenticated
+from users.permissions import IsModerator
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+
+class ProductViewSet(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductListSerializers
+    
+    permission_classes = [IsModerator]
 
 
 # @api_view(['POST'])
